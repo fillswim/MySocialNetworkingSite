@@ -1,0 +1,42 @@
+pipeline {
+    agent {
+        label 'maven'
+    }
+
+    stages {
+        stage('Maven build') {
+            steps {
+                echo "========== Build =========="
+                sh 'mvn clean compile package'
+            }
+        }
+
+        stage('Remove old docker image') {
+            steps {
+                echo "====== Remove old image ======"
+                sh 'docker rmi -f fillswim/sns:latest'
+            }
+        }
+
+        stage('Docker-compose build') {
+            steps {
+                echo "==== Docker-compose build ===="
+                sh 'docker-compose build'
+            }
+        }
+
+        stage('Docker login') {
+            steps {
+                echo "======== Docker login ========"
+                sh 'cat /home/ubuntu/docker_password.txt | docker login --username fillswim --password-stdin'
+            }
+        }
+
+        stage('Push') {
+            steps {
+                echo "======== Docker push ========"
+                sh 'docker push fillswim/sns:latest'
+            }
+        }
+    }
+}

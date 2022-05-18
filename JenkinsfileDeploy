@@ -1,0 +1,50 @@
+pipeline {
+    agent {
+        label 'prod'
+    }
+
+    stages {
+        stage('Docker-compose down') {
+            steps {
+                echo "========== Docker-compose down =========="
+                sh 'docker-compose down'
+            }
+        }
+
+        stage('Remove old docker image') {
+            steps {
+                echo "====== Remove old image ======"
+                sh 'docker rmi -f fillswim/sns:latest'
+            }
+        }
+
+        stage('Load docker-compose.yaml') {
+            steps {
+                echo "====== Load docker-compose.yaml ======"
+                sh 'wget https://raw.githubusercontent.com/fillswim/Shop/master/docker-compose.yaml'
+            }
+        }
+
+        stage('Docker login') {
+            steps {
+                echo "======== Docker login ========"
+                sh 'cat /home/ubuntu/docker_password.txt | docker login --username fillswim --password-stdin'
+            }
+        }
+
+        stage('Docker pull') {
+            steps {
+                echo "======== Docker pull ========"
+                sh 'docker pull fillswim/shop:latest'
+            }
+        }
+
+        stage('Docker run') {
+            steps {
+                echo "======== Docker run ========"
+                sh 'docker-compose run --name MyAppContainer --rm --detach --publish 8080:8080 my-web'
+            }
+        }
+
+    }
+}
