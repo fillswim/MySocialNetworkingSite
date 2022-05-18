@@ -7,7 +7,12 @@ pipeline {
         stage('Maven build') {
             steps {
                 echo "========== Build =========="
-                sh 'mvn clean compile package'
+
+                // Package with tests
+//                sh 'mvn clean compile package'
+
+                // Package without test (skip tests)
+                sh 'mvn clean compile package -DskipTests'
             }
         }
 
