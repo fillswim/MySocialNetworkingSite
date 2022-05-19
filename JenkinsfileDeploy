@@ -2,8 +2,8 @@ pipeline {
     agent {
         label 'prod'
     }
-    options {
-        skipDefaultCheckout true
+    node {
+        skipDefaultCheckout()
     }
 
     stages {
