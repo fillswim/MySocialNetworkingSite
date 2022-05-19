@@ -22,7 +22,7 @@ pipeline {
         stage('Load docker-compose.yaml') {
             steps {
                 echo "====== Load docker-compose.yaml ======"
-                sh 'rm docker-compose.yaml'
+                sh 'rm -f docker-compose.yaml'
                 sh 'wget https://raw.githubusercontent.com/fillswim/MySocialNetworkingSite/master/docker-compose.yaml'
             }
         }
