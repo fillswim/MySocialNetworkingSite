@@ -64,7 +64,7 @@ public class AuthController {
         userService.createUser(signupRequest);
 
         // Отправляется ответ об успешном сохранении нового пользователя
-        return "User has been registered successfully";
+        return "User has been registered successfully!";
     }
 
     // Метод аутентификации на сайте
