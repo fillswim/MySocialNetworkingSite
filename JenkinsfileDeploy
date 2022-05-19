@@ -8,6 +8,7 @@ pipeline {
             steps {
                 echo "========== Docker-compose down =========="
                 sh 'docker-compose down'
+                sh 'docker container prune --force'
             }
         }
 
@@ -21,6 +22,7 @@ pipeline {
         stage('Load docker-compose.yaml') {
             steps {
                 echo "====== Load docker-compose.yaml ======"
+                sh 'rm docker-compose.yaml'
                 sh 'wget https://raw.githubusercontent.com/fillswim/MySocialNetworkingSite/master/docker-compose.yaml'
             }
         }
@@ -35,7 +37,7 @@ pipeline {
         stage('Docker pull') {
             steps {
                 echo "======== Docker pull ========"
-                sh 'docker pull fillswim/shop:latest'
+                sh 'docker pull fillswim/sns:latest'
             }
         }
 
