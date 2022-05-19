@@ -29,5 +29,6 @@
 **CI/CD:**
 - Docker
 - Docker Compose
+- Docker Hub
 - Jenkins Pipeline
 - Amazon EC2
