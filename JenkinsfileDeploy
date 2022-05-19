@@ -2,7 +2,7 @@ pipeline {
     agent {
         label 'prod'
     }
-    node {
+    options {
         skipDefaultCheckout()
     }
 
