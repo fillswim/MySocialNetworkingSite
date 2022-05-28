@@ -32,3 +32,29 @@
 - Docker Hub
 - Jenkins Pipeline
 - Amazon EC2
+
+## Swagger
+<p>
+  <img src="images/Swagger.jpg"/>
+</p>
+
+## AWS
+<p>
+  <img src="images/DockerHub.jpg"/>
+</p>
+
+## Jenkins
+<p>
+  <img src="images/Jenkins_Jobs.jpg"/>
+</p>
+<p>
+  <img src="images/Jenkins_Job_Build.jpg"/>
+</p>
+<p>
+  <img src="images/Jenkins_Job_Deploy.jpg"/>
+</p>
+
+## Docker Hub
+<p>
+  <img src="images/DockerHub.jpg"/>
+</p>
