@@ -1,6 +1,7 @@
 package com.fillolej.mysns.adapter.resource;
 
 
+import com.fillolej.mysns.adapter.resource.response.MessageResponse;
 import com.fillolej.mysns.application.dtos.PostDto;
 import com.fillolej.mysns.adapter.resource.mappers.PostMapper;
 import com.fillolej.mysns.domain.model.Post;
@@ -10,6 +11,8 @@ import com.fillolej.mysns.common.validation.ResponseErrorValidation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -22,8 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin
-@Api(tags = "Post Controller", description = "Actions when working with the posts")
+@Api(tags = "Post Controller")
 @Slf4j
 public class PostController {
 
@@ -129,12 +131,13 @@ public class PostController {
     @DeleteMapping("/{postId}")
     @ApiOperation(value = "Delete a post by id")
     @PreAuthorize("hasAnyAuthority('users:write')")
-    public String deletePost(@PathVariable("postId") Long postId,
-                             @ApiIgnore @AuthenticationPrincipal User user) {
+    public ResponseEntity<Object> deletePost(@PathVariable("postId") Long postId,
+                                             @ApiIgnore @AuthenticationPrincipal User user) {
 
         postService.deletePost(postId, user);
 
-        return "Post was deleted";
+        String message = "Post was deleted";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
 }

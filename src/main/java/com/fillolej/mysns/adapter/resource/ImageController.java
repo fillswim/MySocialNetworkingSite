@@ -1,5 +1,6 @@
 package com.fillolej.mysns.adapter.resource;
 
+import com.fillolej.mysns.adapter.resource.response.MessageResponse;
 import com.fillolej.mysns.domain.model.Image;
 import com.fillolej.mysns.domain.model.User;
 import com.fillolej.mysns.application.ImageService;
@@ -7,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,8 +21,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/images")
-@CrossOrigin
-@Api(tags = "Image Controller", description = "Actions when working with the images")
+@Api(tags = "Image Controller")
 public class ImageController {
 
     private final ImageService imageService;
@@ -33,7 +34,7 @@ public class ImageController {
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "Upload image to user")
     @PreAuthorize("hasAnyAuthority('users:write')")
-    public String uploadImageToUser(
+    public ResponseEntity<Object> uploadImageToUser(
             @Parameter(
                     description = "Files to be uploaded",
                     content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -43,14 +44,15 @@ public class ImageController {
 
         imageService.uploadImageToUser(file, user);
 
-        return "Image to user has been upload successfully";
+        String message = "Image to user has been upload successfully";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     // Метод загрузки фотографии для поста
     @PostMapping(value = "/post/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ApiOperation(value = "Upload image to post")
     @PreAuthorize("hasAnyAuthority('users:write')")
-    public String uploadImageToPost(
+    public ResponseEntity<Object> uploadImageToPost(
             @Parameter(
                     description = "Files to be uploaded",
                     content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -61,7 +63,8 @@ public class ImageController {
 
         imageService.uploadImageToPost(file, user, postId);
 
-        return "Image to post has been upload successfully";
+        String message = "Image to post has been upload successfully";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
 

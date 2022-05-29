@@ -1,5 +1,6 @@
 package com.fillolej.mysns.adapter.resource;
 
+import com.fillolej.mysns.adapter.resource.response.MessageResponse;
 import com.fillolej.mysns.application.dtos.UserDto;
 import com.fillolej.mysns.adapter.resource.mappers.UserMapper;
 import com.fillolej.mysns.domain.model.User;
@@ -9,6 +10,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -21,8 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin // Чтобы не было ошибки при вызове с локального сервера
-@Api(tags = "User Controller", description = "Actions when working with the users")
+@Api(tags = "User Controller")
 @Slf4j
 public class UserController {
 
@@ -102,21 +104,23 @@ public class UserController {
     @DeleteMapping("/current")
     @ApiOperation(value = "Delete current user by token")
     @PreAuthorize("hasAnyAuthority('users:write')")
-    public String deleteCurrentUser(@ApiIgnore @AuthenticationPrincipal User user) {
+    public ResponseEntity<Object> deleteCurrentUser(@ApiIgnore @AuthenticationPrincipal User user) {
 
         userService.deleteUser(user);
 
-        return "Current user was deleted";
+        String message = "Current user was deleted";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     // Метод для удаления пользователя по Id
     @DeleteMapping("/{userId}")
     @ApiOperation(value = "Delete user by Id")
     @PreAuthorize("hasAnyAuthority('admins:write')")
-    public String deleteUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<Object> deleteUser(@PathVariable("userId") Long userId) {
 
         userService.deleteUser(userId);
 
-        return "User with id = " + userId + " has been deleted";
+        String message = "User with id = " + userId + " has been deleted";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 }

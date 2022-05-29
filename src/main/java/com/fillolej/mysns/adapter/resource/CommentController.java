@@ -1,5 +1,6 @@
 package com.fillolej.mysns.adapter.resource;
 
+import com.fillolej.mysns.adapter.resource.response.MessageResponse;
 import com.fillolej.mysns.application.dtos.CommentDto;
 import com.fillolej.mysns.adapter.resource.mappers.CommentMapper;
 import com.fillolej.mysns.domain.model.Comment;
@@ -9,6 +10,8 @@ import com.fillolej.mysns.common.validation.ResponseErrorValidation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
@@ -21,8 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/comments")
-@CrossOrigin
-@Api(tags = "Comment Controller", description = "Actions when working with the comments")
+@Api(tags = "Comment Controller")
 public class CommentController {
 
     private final CommentService commentService;
@@ -104,12 +106,13 @@ public class CommentController {
     @DeleteMapping("/{commentId}")
     @ApiOperation(value = "Delete comment")
     @PreAuthorize("hasAnyAuthority('users:write')")
-    public String deleteComment(@PathVariable("commentId") Long commentId,
+    public ResponseEntity<Object> deleteComment(@PathVariable("commentId") Long commentId,
                                 @ApiIgnore @AuthenticationPrincipal User user) {
 
         commentService.deleteComment(commentId, user);
 
-        return "Comment was deleted";
+        String message = "Comment was deleted";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
 }

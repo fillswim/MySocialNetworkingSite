@@ -3,6 +3,7 @@ package com.fillolej.mysns.adapter.resource;
 import com.fillolej.mysns.adapter.resource.request.LoginRequest;
 import com.fillolej.mysns.adapter.resource.request.SignupRequest;
 import com.fillolej.mysns.adapter.resource.response.JWTTokenSuccessResponse;
+import com.fillolej.mysns.adapter.resource.response.MessageResponse;
 import com.fillolej.mysns.adapter.resource.security.JWTTokenProvider;
 import com.fillolej.mysns.application.impl.UserServiceImpl;
 import com.fillolej.mysns.common.validation.ResponseErrorValidation;
@@ -11,7 +12,9 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,17 +28,17 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Map;
 
-@CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
 @PreAuthorize("permitAll()")
-@Api(tags = "Authentication Controller", description = "Authentication actions")
+@Api(tags = "Authentication Controller")
 @Slf4j
 public class AuthController {
 
-    @Value("${jwt.token-prefix}")
-    private String tokenPrefix;
+//    @Value("${jwt.token-prefix}")
+//    private String tokenPrefix;
 
     private JWTTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
@@ -55,8 +58,8 @@ public class AuthController {
 
     @PostMapping("/signup")
     @ApiOperation(value = "User registration")
-    public String registerUser(@Valid @RequestBody SignupRequest signupRequest,
-                               BindingResult bindingResult) {
+    public ResponseEntity<Object> registerUser(@Valid @RequestBody SignupRequest signupRequest,
+                                            BindingResult bindingResult) {
 
         // Если есть ошибки во входящем запросе, то возвращаются ошибки
         responseErrorValidation.mapValidationService(bindingResult);
@@ -64,11 +67,12 @@ public class AuthController {
         userService.createUser(signupRequest);
 
         // Отправляется ответ об успешном сохранении нового пользователя
-        return "User has been registered successfully!";
+        String message = "User has been registered successfully!";
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.OK);
     }
 
     // Метод аутентификации на сайте
-    @PostMapping("/signin")
+    @PostMapping(value = "/signin", produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "User authentication")
     public ResponseEntity<JWTTokenSuccessResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest,
                                                                     BindingResult bindingResult) {
@@ -87,7 +91,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         // Генерируется токен
-        String token = tokenPrefix + jwtTokenProvider.generateToken(authentication);
+        String token = jwtTokenProvider.generateToken(authentication);
 
         return new ResponseEntity<>(new JWTTokenSuccessResponse(true, token), HttpStatus.OK);
     }
