@@ -1,6 +1,6 @@
 package com.fillolej.mysns.adapter.resource.security;
 
-import com.fillolej.mysns.application.UserService;
+import com.fillolej.mysns.application.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
