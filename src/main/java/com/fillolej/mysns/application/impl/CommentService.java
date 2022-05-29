@@ -7,9 +7,6 @@ import com.fillolej.mysns.domain.model.Comment;
 import com.fillolej.mysns.domain.model.Post;
 import com.fillolej.mysns.domain.model.User;
 import com.fillolej.mysns.domain.model.repositories.CommentRepository;
-import com.fillolej.mysns.application.CommentService;
-import com.fillolej.mysns.application.PostService;
-import com.fillolej.mysns.application.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +17,7 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
-public class CommentServiceImpl implements CommentService {
+public class CommentService {
 
     private final CommentRepository commentRepository;
     private final PostService postService;
@@ -28,10 +25,10 @@ public class CommentServiceImpl implements CommentService {
     private final CommentMapper commentMapper;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository,
-                              PostService postService,
-                              UserService userService,
-                              CommentMapper commentMapper) {
+    public CommentService(CommentRepository commentRepository,
+                          PostService postService,
+                          UserService userService,
+                          CommentMapper commentMapper) {
         this.commentRepository = commentRepository;
         this.postService = postService;
         this.userService = userService;
@@ -39,7 +36,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     // Метод для сохранения комментария
-    @Override
     public Comment saveComment(Long postId,
                                CommentDto commentDto,
                                User user) {
@@ -57,7 +53,6 @@ public class CommentServiceImpl implements CommentService {
         return commentRepository.save(comment);
     }
 
-    @Override
     public Comment updateComment(Long commentId, CommentDto commentDto, User user) {
 
         Comment comment = getCommentByIdAndUser(commentId, user);
@@ -68,7 +63,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     // Метод будет возвращать все комментарии для поста
-    @Override
     public List<Comment> getAllCommentsForPost(Long postId) {
 
         Post post = postService.getPostById(postId);
@@ -78,7 +72,6 @@ public class CommentServiceImpl implements CommentService {
         return comments;
     }
 
-    @Override
     public Comment getCommentByIdAndUser(Long commentId, User user) {
 
         Comment comment = commentRepository.findByIdAndUser(commentId, user)
@@ -89,7 +82,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     // Метод для удаления комментария
-    @Override
     public void deleteComment(Long commentId, User user) {
 
         Comment comment = getCommentByIdAndUser(commentId, user);

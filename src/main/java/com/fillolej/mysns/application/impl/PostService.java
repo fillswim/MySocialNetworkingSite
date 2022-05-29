@@ -8,7 +8,6 @@ import com.fillolej.mysns.domain.model.Post;
 import com.fillolej.mysns.domain.model.User;
 import com.fillolej.mysns.domain.model.repositories.ImageRepository;
 import com.fillolej.mysns.domain.model.repositories.PostRepository;
-import com.fillolej.mysns.application.PostService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,15 +18,15 @@ import java.util.Optional;
 @Service
 @Transactional
 @Slf4j
-public class PostServiceImpl implements PostService {
+public class PostService {
 
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
     private final PostMapper postMapper;
 
-    public PostServiceImpl(PostRepository postRepository,
-                           ImageRepository imageRepository,
-                           PostMapper postMapper) {
+    public PostService(PostRepository postRepository,
+                       ImageRepository imageRepository,
+                       PostMapper postMapper) {
         this.postRepository = postRepository;
         this.imageRepository = imageRepository;
         this.postMapper = postMapper;
@@ -35,7 +34,6 @@ public class PostServiceImpl implements PostService {
 
 
     // Создание поста
-    @Override
     public Post createPost(PostDto postDto, User user) {
 
         Post post = new Post();
@@ -50,7 +48,6 @@ public class PostServiceImpl implements PostService {
         return postRepository.save(post);
     }
 
-    @Override
     public Post updatePost(Long postId, PostDto postDto, User user) {
 
         Post post = getPostByIdAndUser(postId, user);
@@ -61,7 +58,6 @@ public class PostServiceImpl implements PostService {
 
 
     // Возвращение всех постов из БД
-    @Override
     public List<Post> getAllPosts() {
 
         return postRepository.findByOrderByCreatedDateDesc();
@@ -69,7 +65,6 @@ public class PostServiceImpl implements PostService {
 
     // Нахождение поста по id поста и текущему пользователю
     // Principal необходим для того определения принадлежности поста данному пользователю
-    @Override
     public Post getPostByIdAndUser(Long postId, User user) {
 
         Post post = postRepository.findByIdAndUser(postId, user)
@@ -79,7 +74,6 @@ public class PostServiceImpl implements PostService {
     }
 
     // Находит пост по Id
-    @Override
     public Post getPostById(Long postId) {
 
         Post post = postRepository.findById(postId)
@@ -89,7 +83,6 @@ public class PostServiceImpl implements PostService {
     }
 
     // Возвращение всех постов для текущего пользователя
-    @Override
     public List<Post> getAllPostsForUser(User user) {
 
         List<Post> posts = postRepository.findByUserOrderByCreatedDateDesc(user);
@@ -98,7 +91,6 @@ public class PostServiceImpl implements PostService {
     }
 
     // Добавление или удаление лайка к посту
-    @Override
     public Post likePost(Long postId, User user) {
 
         String username = user.getUsername();
@@ -127,7 +119,6 @@ public class PostServiceImpl implements PostService {
 
     // Метод для удаления поста
     // Principal нужен для того, чтобы определить, принадлежит ли пост пользователю, который пытается его удалить
-    @Override
     public void deletePost(Long postId, User user) {
 
         // Находится пост по id поста и пользователю, что говорит о том, что пост принадлежит пользователю

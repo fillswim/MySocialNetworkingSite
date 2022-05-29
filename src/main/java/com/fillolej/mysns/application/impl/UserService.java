@@ -2,17 +2,16 @@ package com.fillolej.mysns.application.impl;
 
 import com.fillolej.mysns.application.dtos.UserDto;
 import com.fillolej.mysns.domain.model.exceptions.UserExistException;
-import com.fillolej.mysns.domain.model.exceptions.UserNotFoundException;
 import com.fillolej.mysns.adapter.resource.mappers.UserMapper;
 import com.fillolej.mysns.domain.model.Role;
 import com.fillolej.mysns.domain.model.Status;
 import com.fillolej.mysns.domain.model.User;
 import com.fillolej.mysns.adapter.resource.request.SignupRequest;
 import com.fillolej.mysns.domain.model.repositories.UserRepository;
-import com.fillolej.mysns.application.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,16 +24,15 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
-@Slf4j
-public class UserServiceImpl implements UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository,
-                           UserMapper userMapper,
-                           BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository,
+                       UserMapper userMapper,
+                       BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -48,8 +46,6 @@ public class UserServiceImpl implements UserService {
 
         Set<SimpleGrantedAuthority> authorities = getAuthoritiesFromUser(user);
         Status status = user.getStatus();
-
-        log.info("IN loadUserByUsername() - status: {}", status);
 
         user.setAccountNonExpired(status.equals(Status.ACTIVE));
         user.setAccountNonLocked(status.equals(Status.ACTIVE));
@@ -76,13 +72,12 @@ public class UserServiceImpl implements UserService {
     private User getByUsername(String username) {
 
         User user = userRepository.findByUsername(username)
-                .orElseThrow(() -> new UserNotFoundException("User with username " + username + " hasn't been found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with username " + username + " hasn't been found"));
 
         return user;
     }
 
     // Создание пользователя из входящего запроса
-    @Override
     public User createUser(SignupRequest request) {
 
         User user = new User();
@@ -109,17 +104,15 @@ public class UserServiceImpl implements UserService {
     }
 
     // Получение пользователя по Id
-    @Override
     public User getUserById(Long userId) {
 
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("User with id " + userId + " hasn't been found"));
+                .orElseThrow(() -> new UsernameNotFoundException("User with id " + userId + " hasn't been found"));
 
         return user;
     }
 
     // Найти все пользователей
-    @Override
     public List<User> findAllUsers() {
 
         List<User> users = userRepository.findAll();
@@ -128,7 +121,6 @@ public class UserServiceImpl implements UserService {
     }
 
     // Обновление данных пользователя
-    @Override
     public User updateUser(UserDto userDto, User user) {
 
         userMapper.updateUserFromUserDto(userDto, user);
@@ -136,13 +128,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
-    @Override
     public void deleteUser(User user) {
 
         userRepository.delete(user);
     }
 
-    @Override
     public void deleteUser(Long userId) {
 
         userRepository.deleteById(userId);
