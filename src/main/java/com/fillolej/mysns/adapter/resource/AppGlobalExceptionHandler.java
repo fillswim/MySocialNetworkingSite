@@ -1,5 +1,6 @@
 package com.fillolej.mysns.adapter.resource;
 
+import com.fillolej.mysns.adapter.resource.response.MessageResponse;
 import com.fillolej.mysns.common.exception.ApplicationException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -36,11 +37,13 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     // Обработчик для @PreAuthorize
     @ExceptionHandler()
-    public ResponseEntity<String> appException(AccessDeniedException exception) {
+    public ResponseEntity<Object> appException(AccessDeniedException exception) {
 
         log.error("AccessDeniedException has been thrown");
 
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.FORBIDDEN);
+        String message = exception.getMessage();
+
+        return new ResponseEntity<>(new MessageResponse(message), HttpStatus.FORBIDDEN);
     }
 
 }
