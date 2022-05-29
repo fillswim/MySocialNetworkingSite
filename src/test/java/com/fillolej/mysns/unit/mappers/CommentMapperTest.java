@@ -1,8 +1,8 @@
 package com.fillolej.mysns.unit.mappers;
 
-import com.fillolej.mysns.dtos.CommentDto;
-import com.fillolej.mysns.mappers.CommentMapperImpl;
-import com.fillolej.mysns.models.Comment;
+import com.fillolej.mysns.application.dtos.CommentDto;
+import com.fillolej.mysns.adapter.resource.mappers.CommentMapperImpl;
+import com.fillolej.mysns.domain.model.Comment;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

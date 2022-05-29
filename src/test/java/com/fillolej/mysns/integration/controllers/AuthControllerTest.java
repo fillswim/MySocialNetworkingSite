@@ -1,8 +1,8 @@
 package com.fillolej.mysns.integration.controllers;
 
 import com.fillolej.mysns.AbstractRestControllerTest;
-import com.fillolej.mysns.payloads.request.LoginRequest;
-import com.fillolej.mysns.payloads.request.SignupRequest;
+import com.fillolej.mysns.adapter.resource.request.LoginRequest;
+import com.fillolej.mysns.adapter.resource.request.SignupRequest;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
