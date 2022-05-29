@@ -62,4 +62,44 @@ class AuthControllerTest extends AbstractRestControllerTest {
                 .andExpect(jsonPath("$.token", containsString("Bearer ")));
     }
 
+    @Test
+    @Order(13)
+    void authenticateUser_403Forbidden_badUsername() throws Exception {
+
+        LoginRequest loginRequest = LoginRequest.builder()
+                .username("badUser")
+                .password("password")
+                .build();
+
+        String loginRequestJson = new Gson().toJson(loginRequest);
+
+        mockMvc.perform(post("/api/auth/signin")
+                        .content(loginRequestJson)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.username", is("Invalid Username")))
+                .andExpect(jsonPath("$.password", is("Invalid password")));
+    }
+
+    @Test
+    @Order(14)
+    void authenticateUser_403Forbidden_badPassword() throws Exception {
+
+        LoginRequest loginRequest = LoginRequest.builder()
+                .username("user")
+                .password("badpassword")
+                .build();
+
+        String loginRequestJson = new Gson().toJson(loginRequest);
+
+        mockMvc.perform(post("/api/auth/signin")
+                        .content(loginRequestJson)
+                        .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$.username", is("Invalid Username")))
+                .andExpect(jsonPath("$.password", is("Invalid password")));
+    }
+
 }

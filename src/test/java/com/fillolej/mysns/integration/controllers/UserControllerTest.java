@@ -19,11 +19,11 @@ class UserControllerTest extends AbstractRestControllerTest {
     // Not Authenticate (401 Unauthorized)
     @Test
     @Order(21)
-    void getAllUsers_401Unauthorized() throws Exception {
+    void getAllUsers_403Forbidden_noJWT() throws Exception {
 
         mockMvc.perform(get("/api/users"))
                 .andDo(print())
-                .andExpect(status().isUnauthorized());
+                .andExpect(status().isForbidden());
     }
 
     // Not enough rights (403 Forbidden)
