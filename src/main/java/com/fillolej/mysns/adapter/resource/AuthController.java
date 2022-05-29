@@ -5,14 +5,12 @@ import com.fillolej.mysns.adapter.resource.request.SignupRequest;
 import com.fillolej.mysns.adapter.resource.response.JWTTokenSuccessResponse;
 import com.fillolej.mysns.adapter.resource.response.MessageResponse;
 import com.fillolej.mysns.adapter.resource.security.JWTTokenProvider;
-import com.fillolej.mysns.application.impl.UserServiceImpl;
+import com.fillolej.mysns.application.impl.UserService;
 import com.fillolej.mysns.common.validation.ResponseErrorValidation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.mail.MailProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +26,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -43,13 +40,13 @@ public class AuthController {
     private JWTTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
     private final ResponseErrorValidation responseErrorValidation; // Обработчик ошибок во входящем запросе
-    private final UserServiceImpl userService;
+    private final UserService userService;
 
     @Autowired
     public AuthController(JWTTokenProvider jwtTokenProvider,
                           AuthenticationManager authenticationManager,
                           ResponseErrorValidation responseErrorValidation,
-                          UserServiceImpl userService) {
+                          UserService userService) {
         this.jwtTokenProvider = jwtTokenProvider;
         this.authenticationManager = authenticationManager;
         this.responseErrorValidation = responseErrorValidation;

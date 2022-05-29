@@ -1,9 +1,9 @@
 package com.fillolej.mysns.adapter.resource;
 
 import com.fillolej.mysns.adapter.resource.response.MessageResponse;
+import com.fillolej.mysns.application.impl.ImageService;
 import com.fillolej.mysns.domain.model.Image;
 import com.fillolej.mysns.domain.model.User;
-import com.fillolej.mysns.application.ImageService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Parameter;
