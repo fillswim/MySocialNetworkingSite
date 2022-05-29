@@ -39,7 +39,7 @@ class AuthControllerTest extends AbstractRestControllerTest {
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("User has been registered successfully!")));
+                .andExpect(jsonPath("$.message", is("User has been registered successfully!")));
     }
 
     @Test

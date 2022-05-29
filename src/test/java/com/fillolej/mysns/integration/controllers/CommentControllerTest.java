@@ -135,6 +135,6 @@ class CommentControllerTest extends AbstractRestControllerTest {
                         .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Comment was deleted")));
+                .andExpect(jsonPath("$.message", is("Comment was deleted")));
     }
 }

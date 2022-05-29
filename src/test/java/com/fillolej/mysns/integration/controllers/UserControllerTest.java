@@ -37,7 +37,7 @@ class UserControllerTest extends AbstractRestControllerTest {
                         .header("Authorization", token))
                 .andDo(print())
                 .andExpect(status().isForbidden())
-                .andExpect(jsonPath("$", is("Access is denied")));
+                .andExpect(jsonPath("$.message", is("Access is denied")));
     }
 
     // Ok
@@ -118,7 +118,9 @@ class UserControllerTest extends AbstractRestControllerTest {
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                         .header("Authorization", token))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", is("Current user was deleted")));
+
     }
 
     @Test
@@ -132,7 +134,8 @@ class UserControllerTest extends AbstractRestControllerTest {
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                         .header("Authorization", token))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", is("User with id = 2 has been deleted")));
     }
 
 }

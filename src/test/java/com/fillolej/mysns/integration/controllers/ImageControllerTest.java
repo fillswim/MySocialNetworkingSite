@@ -36,7 +36,7 @@ class ImageControllerTest extends AbstractRestControllerTest {
                         .file(mockMultipartFile)
                         .header("Authorization", token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Image to user has been upload successfully")));
+                .andExpect(jsonPath("$.message", is("Image to user has been upload successfully")));
     }
 
     @BeforeEach
@@ -58,7 +58,7 @@ class ImageControllerTest extends AbstractRestControllerTest {
                         .file(mockMultipartFile)
                         .header("Authorization", token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Image to post has been upload successfully")));
+                .andExpect(jsonPath("$.message", is("Image to post has been upload successfully")));
     }
 
     @Test
@@ -79,7 +79,7 @@ class ImageControllerTest extends AbstractRestControllerTest {
                         .file(mockMultipartFile)
                         .header("Authorization", token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Image to user has been upload successfully")));
+                .andExpect(jsonPath("$.message", is("Image to user has been upload successfully")));
     }
 
     @Test
@@ -102,7 +102,7 @@ class ImageControllerTest extends AbstractRestControllerTest {
                         .file(mockMultipartFile)
                         .header("Authorization", token))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Image to post has been upload successfully")));
+                .andExpect(jsonPath("$.message", is("Image to post has been upload successfully")));
     }
 
     @Test

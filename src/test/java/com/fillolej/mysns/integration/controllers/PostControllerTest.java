@@ -202,7 +202,8 @@ class PostControllerTest extends AbstractRestControllerTest {
                         .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON)
                         .header("Authorization", token))
                 .andDo(print())
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message", is("Post was deleted")));
     }
 
 }
