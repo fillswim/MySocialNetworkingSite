@@ -20,7 +20,6 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -28,7 +27,7 @@ public class SwaggerConfig {
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.fillolej.mysns.adapter.resource."))
+                .apis(RequestHandlerSelectors.basePackage("com.fillolej.mysns.adapter.resource"))
                 .paths(PathSelectors.any())
                 .build();
     }
