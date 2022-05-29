@@ -1,9 +1,9 @@
 package com.fillolej.mysns.unit.mappers;
 
-import com.fillolej.mysns.dtos.PostDto;
-import com.fillolej.mysns.mappers.PostMapperImpl;
-import com.fillolej.mysns.models.Post;
-import com.fillolej.mysns.models.User;
+import com.fillolej.mysns.application.dtos.PostDto;
+import com.fillolej.mysns.adapter.resource.mappers.PostMapperImpl;
+import com.fillolej.mysns.domain.model.Post;
+import com.fillolej.mysns.domain.model.User;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;

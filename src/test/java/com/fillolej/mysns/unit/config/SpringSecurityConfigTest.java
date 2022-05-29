@@ -1,8 +1,8 @@
 package com.fillolej.mysns.unit.config;
 
-import com.fillolej.mysns.models.Role;
-import com.fillolej.mysns.models.Status;
-import com.fillolej.mysns.models.User;
+import com.fillolej.mysns.domain.model.Role;
+import com.fillolej.mysns.domain.model.Status;
+import com.fillolej.mysns.domain.model.User;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Primary;

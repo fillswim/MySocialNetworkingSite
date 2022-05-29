@@ -1,13 +1,13 @@
 package com.fillolej.mysns.unit.controllers;
 
 import com.fillolej.mysns.MySocialNetworkingSiteApplication;
-import com.fillolej.mysns.dtos.UserDto;
+import com.fillolej.mysns.application.dtos.UserDto;
 import com.fillolej.mysns.AbstractRestControllerTest;
 import com.fillolej.mysns.unit.config.SpringSecurityConfigTest;
-import com.fillolej.mysns.models.Role;
-import com.fillolej.mysns.models.Status;
-import com.fillolej.mysns.models.User;
-import com.fillolej.mysns.repositories.UserRepository;
+import com.fillolej.mysns.domain.model.Role;
+import com.fillolej.mysns.domain.model.Status;
+import com.fillolej.mysns.domain.model.User;
+import com.fillolej.mysns.domain.model.repositories.UserRepository;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

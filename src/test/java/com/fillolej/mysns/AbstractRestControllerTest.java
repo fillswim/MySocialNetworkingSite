@@ -1,9 +1,9 @@
 package com.fillolej.mysns;
 
-import com.fillolej.mysns.dtos.UserDto;
+import com.fillolej.mysns.application.dtos.UserDto;
 import com.fillolej.mysns.integration.initializer.Postgres;
-import com.fillolej.mysns.payloads.request.LoginRequest;
-import com.fillolej.mysns.payloads.response.JWTTokenSuccessResponse;
+import com.fillolej.mysns.adapter.resource.request.LoginRequest;
+import com.fillolej.mysns.adapter.resource.response.JWTTokenSuccessResponse;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.MethodOrderer;

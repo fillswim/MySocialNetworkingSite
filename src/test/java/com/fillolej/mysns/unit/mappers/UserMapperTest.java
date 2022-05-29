@@ -1,10 +1,10 @@
 package com.fillolej.mysns.unit.mappers;
 
-import com.fillolej.mysns.dtos.UserDto;
-import com.fillolej.mysns.mappers.UserMapperImpl;
-import com.fillolej.mysns.models.Role;
-import com.fillolej.mysns.models.Status;
-import com.fillolej.mysns.models.User;
+import com.fillolej.mysns.application.dtos.UserDto;
+import com.fillolej.mysns.adapter.resource.mappers.UserMapperImpl;
+import com.fillolej.mysns.domain.model.Role;
+import com.fillolej.mysns.domain.model.Status;
+import com.fillolej.mysns.domain.model.User;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;

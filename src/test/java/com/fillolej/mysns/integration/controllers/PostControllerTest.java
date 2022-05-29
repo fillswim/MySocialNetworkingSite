@@ -1,6 +1,6 @@
 package com.fillolej.mysns.integration.controllers;
 
-import com.fillolej.mysns.dtos.PostDto;
+import com.fillolej.mysns.application.dtos.PostDto;
 import com.fillolej.mysns.AbstractRestControllerTest;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.Order;
