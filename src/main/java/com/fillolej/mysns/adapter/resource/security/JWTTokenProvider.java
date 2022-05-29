@@ -88,7 +88,7 @@ public class JWTTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, secretKey)
                 .compact();
 
-        return token;
+        return tokenPrefix + token;
     }
 
     // Проверка на валидность токена (token => boolean)
