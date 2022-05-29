@@ -36,7 +36,7 @@ public class AppGlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     // Обработчик для @PreAuthorize
-    @ExceptionHandler()
+    @ExceptionHandler
     public ResponseEntity<Object> appException(AccessDeniedException exception) {
 
         log.error("AccessDeniedException has been thrown");
