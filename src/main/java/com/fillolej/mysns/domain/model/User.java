@@ -1,7 +1,6 @@
 package com.fillolej.mysns.domain.model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,7 +11,6 @@ import javax.validation.constraints.Email;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Getter
@@ -72,19 +70,6 @@ public class User extends BaseEntity implements UserDetails {
     @Fetch(value= FetchMode.SELECT)
     private Image image;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this)
-                != Hibernate.getClass(o)) return false;
-        User user = (User) o;
-        return getId() != null && Objects.equals(getId(), user.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
     /**
      * Security
      */

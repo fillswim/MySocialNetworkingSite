@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.*;
@@ -56,17 +55,4 @@ public class Post extends BaseEntity {
             orphanRemoval = true)
     private Image image;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this)
-                != Hibernate.getClass(o)) return false;
-        Post post = (Post) o;
-        return getId() != null && Objects.equals(getId(), post.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
