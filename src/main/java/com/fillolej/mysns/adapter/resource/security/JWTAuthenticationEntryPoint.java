@@ -32,7 +32,7 @@ public class JWTAuthenticationEntryPoint implements AuthenticationEntryPoint {
 
         // Создается HttpServletResponse
         response.setContentType(contextType);
-        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         response.getWriter().println(jsonInvalidLoginResponse);
     }
 }
