@@ -1,7 +1,7 @@
 package com.fillolej.mysns.adapter.resource.security;
 
+import com.fillolej.mysns.application.impl.UserService;
 import com.fillolej.mysns.domain.model.User;
-import com.fillolej.mysns.application.UserService;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
